@@ -45,6 +45,24 @@ export default function Meme() {
     }))
   } 
 
+  // Set two states that will allow us to increase or decrase the font size
+  // Font size initialize at 1.2em
+  // The state of decraseFontSizeState is inizialize with the current font size that is used
+  const [increaseFontSizeState, setIncreaseFontSizeState] = useState(1.2)
+
+  const [decreaseFontSizeState, setDecreaseFontSizeState] = useState(increaseFontSizeState)
+
+  function increaseFontSize() {
+    setIncreaseFontSizeState(prevValue => prevValue + 1)
+  }
+
+  function decreaseFontSize() {
+    setIncreaseFontSizeState(prevValue => prevValue - 1)
+  }
+
+  let decreaseFontSizeStyle = {fontSize: `${increaseFontSizeState}em`}
+  let increaseFontSizeStyle = {fontSize: `${increaseFontSizeState}em`}
+
   return (
     <main id="main">
       <div id="form">
@@ -83,8 +101,16 @@ export default function Meme() {
             alt="random meme"
             className="meme--image"
           />
-          <h2 className="meme--text top">{meme.topText}</h2>
-          <h2 className="meme--text bottom">{meme.bottomText}</h2>
+          <h2 className="meme--text top" style={increaseFontSizeStyle}>{meme.topText}</h2>
+          <h2 className="meme--text bottom" style={decreaseFontSizeStyle}>{meme.bottomText}</h2>
+        </div>
+        <br />
+        <div className="fontSize">
+          <p className='fontSizeBorder' onClick={increaseFontSize}>Increase font size</p>
+          <br />
+          <p className='fontSizeBorder' onClick={decreaseFontSize}>Decrease font size</p>
+          <br />
+          <button id="submit">Change font family</button>
         </div>
       </div>
     </main>

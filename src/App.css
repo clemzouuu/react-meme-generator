@@ -61,7 +61,7 @@ span {
 
 .meme--image { 
   align-self: center;
-  height: 650px;
+  max-height: 400px;
   width: 100%;
   border-radius: 3px;
 }
@@ -70,8 +70,6 @@ span {
 .meme {
   position: relative;
 }
-
- 
 
 .meme--text {
     position: absolute;
@@ -104,4 +102,20 @@ span {
 
 .top {
     top: 0;
+}
+
+.fontSize{
+  display: flex;
+  flex-direction: column;
+}
+
+.fontSizeBorder{
+  background-color: RGB(146, 168, 209);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin: 0%;
+  padding: 10px;
 }
