@@ -1,6 +1,6 @@
 body {
-  font-family: sans-serif;
   margin: 2% 25% 2% 25%;
+  font-family: sans-serif;
 }
 
 #main {
@@ -79,8 +79,7 @@ span {
     transform: translateX(-50%);
     margin: 15px 0;
     padding: 0 5px;
-    font-family: impact, sans-serif;
-    font-size: 2em;
+    font-family: sans-serif; 
     text-transform: uppercase;
     color: white;
     letter-spacing: 1px;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import DraggableDiv from "./DraggableDiv"
 
 let url
 
@@ -52,6 +53,19 @@ export default function Meme() {
 
   const [decreaseFontSizeState, setDecreaseFontSizeState] = useState(increaseFontSizeState)
 
+  const [changeFontFamilyState, setChangeFontFamilyState] = useState(['sans-serif','Georgia', 'Gill Sans', 'cursive'])
+
+  const [numberForLoopingInArray, setnumberForLoopingInArray] = useState(0)
+
+  function changeFontSize() {
+    if(numberForLoopingInArray >= 3) {
+      setnumberForLoopingInArray(0)
+    } else {
+      setnumberForLoopingInArray(numberForLoopingInArray + 1)
+    }
+    
+  }
+
   function increaseFontSize() {
     setIncreaseFontSizeState(prevValue => prevValue + 1)
   }
@@ -60,20 +74,25 @@ export default function Meme() {
     setIncreaseFontSizeState(prevValue => prevValue - 1)
   }
 
-  let decreaseFontSizeStyle = {fontSize: `${increaseFontSizeState}em`}
-  let increaseFontSizeStyle = {fontSize: `${increaseFontSizeState}em`}
+  let decreaseFontSizeStyle = {fontSize: `${increaseFontSizeState}em`, fontFamily:`${changeFontFamilyState[numberForLoopingInArray]}`}
+  let increaseFontSizeStyle = {fontSize: `${increaseFontSizeState}em`, fontFamily:`${changeFontFamilyState[numberForLoopingInArray]}`}
+
+ 
+
+ 
 
   return (
     <main id="main">
       <div id="form">
         <div id="submit-text">
+        
           <input
             type="text"
             id="inputLeft"
             placeholder="Top text"
             name="topText"
             onChange={handleChange}
-            value={meme.topText}
+            value={meme.topText} 
           />
 
           <input
@@ -103,6 +122,7 @@ export default function Meme() {
           />
           <h2 className="meme--text top" style={increaseFontSizeStyle}>{meme.topText}</h2>
           <h2 className="meme--text bottom" style={decreaseFontSizeStyle}>{meme.bottomText}</h2>
+          <DraggableDiv />
         </div>
         <br />
         <div className="fontSize">
@@ -110,7 +130,7 @@ export default function Meme() {
           <br />
           <p className='fontSizeBorder' onClick={decreaseFontSize}>Decrease font size</p>
           <br />
-          <button id="submit">Change font family</button>
+          <button id="submit" onClick={changeFontSize}>Change font family</button>
         </div>
       </div>
     </main>

@@ -1,8 +1,9 @@
 # react-meme-generator
+
+start with npm run dev 
+
 meme generator made with react
 A new version is yet to come. A version that will imply : 
-- a resize function to resize the font size.
-- a button to change the font family
 - a function to move the texts.
 - a function to save the image.
 - a function to import an image from your computer.
