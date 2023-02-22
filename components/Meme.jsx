@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import DraggableDiv from "./DraggableDiv"
+
+import React, { useState, useEffect } from 'react' 
+import DraggableDiv from "./DraggableDiv"  
+
 
 let url
 
@@ -57,13 +59,14 @@ export default function Meme() {
 
   const [numberForLoopingInArray, setnumberForLoopingInArray] = useState(0)
 
+  const [textColor, setTextColor] = useState(true)
+
   function changeFontSize() {
     if(numberForLoopingInArray >= 3) {
       setnumberForLoopingInArray(0)
     } else {
       setnumberForLoopingInArray(numberForLoopingInArray + 1)
-    }
-    
+    } 
   }
 
   function increaseFontSize() {
@@ -74,18 +77,21 @@ export default function Meme() {
     setIncreaseFontSizeState(prevValue => prevValue - 1)
   }
 
+  function changeTextColor(){
+    setTextColor(prevValue => !prevValue)
+  }
+
   let decreaseFontSizeStyle = {fontSize: `${increaseFontSizeState}em`, fontFamily:`${changeFontFamilyState[numberForLoopingInArray]}`}
+
   let increaseFontSizeStyle = {fontSize: `${increaseFontSizeState}em`, fontFamily:`${changeFontFamilyState[numberForLoopingInArray]}`}
-
  
 
  
-
   return (
     <main id="main">
+    
       <div id="form">
         <div id="submit-text">
-        
           <input
             type="text"
             id="inputLeft"
@@ -104,6 +110,7 @@ export default function Meme() {
             value={meme.bottomText}
           />
         </div>
+
         <br />
         <input
           onClick={getMemeImage}
@@ -114,23 +121,42 @@ export default function Meme() {
 
         <br />
         <br />
+
         <div className="meme">
           <img
             src={meme.randomImage}
             alt="random meme"
             className="meme--image"
           />
-          <h2 className="meme--text top" style={increaseFontSizeStyle}>{meme.topText}</h2>
-          <h2 className="meme--text bottom" style={decreaseFontSizeStyle}>{meme.bottomText}</h2>
-          <DraggableDiv />
+
+          <div className="initialPositionTop">
+            <DraggableDiv 
+              style={increaseFontSizeStyle}
+              text={meme.topText}
+              isItBlack={textColor}
+            />
+          </div>
+           
+          <div className="initialPositionBottom">
+            <DraggableDiv 
+              style={increaseFontSizeStyle}
+              text={meme.bottomText}
+              isItBlack={textColor}
+            />
+          </div>
         </div>
+
         <br />
+
         <div className="fontSize">
           <p className='fontSizeBorder' onClick={increaseFontSize}>Increase font size</p>
           <br />
           <p className='fontSizeBorder' onClick={decreaseFontSize}>Decrease font size</p>
           <br />
           <button id="submit" onClick={changeFontSize}>Change font family</button>
+          <br />
+          <button id="submit" onClick={changeTextColor}>Change text color</button>
+
         </div>
       </div>
     </main>

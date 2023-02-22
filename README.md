@@ -3,8 +3,7 @@
 start with npm run dev 
 
 meme generator made with react
-A new version is yet to come. A version that will imply : 
-- a function to move the texts.
+A new version is yet to come. A version that will imply :  
 - a function to save the image.
 - a function to import an image from your computer.
 
