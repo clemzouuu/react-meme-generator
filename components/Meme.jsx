@@ -70,11 +70,11 @@ export default function Meme() {
   }
 
   function increaseFontSize() {
-    setIncreaseFontSizeState(prevValue => prevValue + 1)
+    setIncreaseFontSizeState(prevValue => prevValue + .1)
   }
 
   function decreaseFontSize() {
-    setIncreaseFontSizeState(prevValue => prevValue - 1)
+    setIncreaseFontSizeState(prevValue => prevValue - .1)
   }
 
   function changeTextColor(){
