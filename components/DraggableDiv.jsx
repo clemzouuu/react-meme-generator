@@ -20,15 +20,17 @@ export default function DraggableDiv(props) {
   const handleMouseMove = (e) => {
     if (dragging) {
     // If the div is being displaced, its position is set to the mouse's on
-      setPosition({
-        x: e.clientX - offset.x,
-        y: e.clientY - offset.y
-      });
+    const newPosition = {
+      x: e.clientX - offset.x,
+      y: e.clientY - offset.y
+    };
+    setPosition(newPosition); 
     }
   };
 
   const handleMouseUp = () => {
-    setDragging(false);
+    setDragging(false); 
+    props.updatePosition(position);
   };  
 
   return (

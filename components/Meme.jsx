@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react' 
 import DraggableDiv from "./DraggableDiv"  
-
+import html2canvas from 'html2canvas';
 
 let url
 
@@ -15,6 +15,9 @@ export default function Meme() {
   })
 
   const [allMemes, setAllMeme] = useState([])
+
+  const [topTextPosition, setTopTextPosition] = useState({ x: 0, y: 0 });
+  const [bottomTextPosition, setBottomTextPosition] = useState({ x: 0, y: 0 });
 
   // At the loading of the page, a fetch is made only once to an API. 
   // The data that comes back is then used to display a new random image.
@@ -47,6 +50,58 @@ export default function Meme() {
       [name] : [value]
     }))
   } 
+
+  function updateTopTextPosition(newPosition) {
+    setTopTextPosition(newPosition); 
+  }
+  
+  function updateBottomTextPosition(newPosition) {
+    setBottomTextPosition(newPosition);
+  }
+
+  function saveMeme() {
+    const canvas = document.getElementById('memeCanvas');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+
+    image.crossOrigin = "anonymous";
+    image.src = meme.randomImage;
+
+    image.onload = () => {
+      const topText = meme.topText[0].toUpperCase();
+      const bottomText = meme.bottomText[0].toUpperCase();
+      canvas.width = image.width;
+      canvas.height = image.height;
+      ctx.drawImage(image, 0, 0);
+      ctx.fillStyle = textColor ? 'black' : 'white'; 
+      ctx.font = `${increaseFontSizeState}em ${changeFontFamilyState[numberForLoopingInArray]}`;
+      if(topText != "")
+        ctx.fillText(topText, topTextPosition.x+350, topTextPosition.y+70);
+      if(bottomText != "")
+        ctx.fillText(bottomText, bottomTextPosition.x+200, bottomTextPosition.y+350);
+      const link = document.createElement('a');
+      link.download = 'meme.png';
+      link.href = canvas.toDataURL();
+      link.click();
+  };
+  }
+
+  function handleImageUpload(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    reader.addEventListener("load", () => {
+      // Mettre à jour l'état avec l'URL de l'image
+      setMeme((prevMeme) => ({
+        ...prevMeme,
+        randomImage: reader.result
+      }));
+    }, false);
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
 
   // Set two states that will allow us to increase or decrase the font size
   // Font size initialize at 1.2em
@@ -129,11 +184,14 @@ export default function Meme() {
             className="meme--image"
           />
 
+        <canvas id="memeCanvas" style={{display: 'none'}}></canvas>
+
           <div className="initialPositionTop">
             <DraggableDiv 
               style={increaseFontSizeStyle}
               text={meme.topText}
               isItBlack={textColor}
+              updatePosition={updateTopTextPosition}
             />
           </div>
            
@@ -142,6 +200,7 @@ export default function Meme() {
               style={increaseFontSizeStyle}
               text={meme.bottomText}
               isItBlack={textColor}
+              updatePosition={updateBottomTextPosition}
             />
           </div>
         </div>
@@ -149,14 +208,25 @@ export default function Meme() {
         <br />
 
         <div className="fontSize">
-          <p className='fontSizeBorder' onClick={increaseFontSize}>Increase font size</p>
+          <p className='fontSizeBorder one' onClick={increaseFontSize}>Increase font size</p>
           <br />
-          <p className='fontSizeBorder' onClick={decreaseFontSize}>Decrease font size</p>
+          <p className='fontSizeBorder two' onClick={decreaseFontSize}>Decrease font size</p>
           <br />
-          <button id="submit" onClick={changeFontSize}>Change font family</button>
+          <button id="submit" className='three' onClick={changeFontSize}>Change font family</button>
           <br />
-          <button id="submit" onClick={changeTextColor}>Change text color</button>
-
+          <button id="submit" className='four' onClick={changeTextColor}>Change text color</button>
+          <br /> 
+          <label htmlFor="file-upload" className="fontSizeBorder five">
+            Import image
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}  
+          />
+          <p className='fontSizeBorder six' onClick={saveMeme}>Save image</p>
         </div>
       </div>
     </main>

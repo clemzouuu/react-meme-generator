@@ -9,7 +9,7 @@ export default function Header () {
           />
           <span>Meme Generator</span>
         </h1>
-        <p>React Course Projet 3 -- By Clemzouuu</p>
+        
       </div>
     )
 }
